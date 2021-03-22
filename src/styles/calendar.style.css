@@ -1,0 +1,13 @@
+body{
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.Calendar {
+    margin: 4rem 0;
+}
+
+.Calendar-days {
+    font-weight: 500;
+    margin-top: 2rem;
+    text-align: left;
+}
