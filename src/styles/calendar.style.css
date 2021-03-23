@@ -6,8 +6,18 @@ body{
     margin: 4rem 0;
 }
 
-.Calendar-days {
+.Calendar-dayNames {
     font-weight: 500;
     margin-top: 2rem;
-    text-align: left;
+    text-align: center;
+}
+
+
+.Calendar-days {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.Calendar-days:hover {
+    background-color: antiquewhite;
 }
