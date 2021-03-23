@@ -10,20 +10,20 @@ class Calendar extends Component {
         super(props);
         // this.getDates = this.getDates.bind(this);
         this.state = {
-            daySelected: "",
+            selectedDate: "",
             daysInMonth: []
         };
     }
 
 
     componentDidMount() {
-
+        this.handleDateChange("2020-11-2");
     }
 
     handleDateChange = (date) => {
         if (date) {
             this.setState({
-                daySelected: date,
+                selectedDate: date,
                 daysInMonth: this.getAllDaysInMonth(date)
             }, () => {
                 // console.log(this.state.daysInMonth);
@@ -71,14 +71,49 @@ class Calendar extends Component {
     }
 
 
-    getFirstDayIx = () => {
+    // handleYearChange = (year) => {
+    //     var newDate = this.state.dateSelected;
 
-    }
-
-
+    //     this.setState({
+    //         selectedDate
+    //     })
+    // }
 
 
     render() {
+        if (!(this.state.daysInMonth === undefined || this.state.daysInMonth.length == 0)) {
+            var allWeeks = [];
+            var currentDayIx = 0;
+            var currentWeek = [];
+            const nrOfDaysInMonth = this.state.daysInMonth.length;
+            for (var i = 0; i < nrOfDaysInMonth; i++){
+                currentDayIx = this.state.daysInMonth[i].getDay();
+                currentDayIx = (currentDayIx == 0) ? 6 : currentDayIx - 1;
+                currentWeek.push(this.state.daysInMonth[i]);
+                if (currentDayIx == 6 || (this.state.daysInMonth.length == i + 1)) {
+                    allWeeks.push(currentWeek);
+                    currentWeek = [];
+                }
+            }
+
+            const firstDayIx = (this.state.daysInMonth[0].getDay() == 0) ? 6 : this.state.daysInMonth[0].getDay() - 1;
+            const lastDayIx = (this.state.daysInMonth[nrOfDaysInMonth-1].getDay() == 0) ? 6 : this.state.daysInMonth[nrOfDaysInMonth-1].getDay() - 1;
+            console.log(firstDayIx);
+
+            var emptyDates;
+            if (firstDayIx != 0) {
+                emptyDates = Array(firstDayIx).fill(null)
+                allWeeks[0].unshift(...emptyDates);
+            }
+
+            if (lastDayIx != 6) {
+                emptyDates = Array(6-lastDayIx).fill(null)
+                allWeeks[allWeeks.length-1].push(...emptyDates);
+            }
+        }
+        
+
+
         return (
             <Container className="Calendar">
                 <Form>
@@ -107,7 +142,7 @@ class Calendar extends Component {
                         </Form.Group>
                     </Form.Row>
                 </Form>
-                <Row className="Calendar-days">
+                <Row className="Calendar-dayNames">
                     <Col xs="2" />
                     {days.map((day, i) =>
                         <Col xs="1" key={i}>
@@ -115,12 +150,9 @@ class Calendar extends Component {
                         </Col>
                     )}
                 </Row>
-                <Row className="Calendar-dates">
-                    {days.map((day, i) =>
-                        <Col xs="1" key={i}>
-                            <p>{day}</p>
-                        </Col>
-                    )}
+                <Row className="Calendar-days">
+                <Col xs="2" />
+                    <CalendarDay day={new Date()}/>
                 </Row>
             </Container>
         );
@@ -128,25 +160,33 @@ class Calendar extends Component {
 }
 
 // function CalendarWeek(props) {
+
+//     var week = []
+
 //     return (
-//         for (int i = 0; i < props.week.length; )
+//         // var startIx = props.days[0].getDay();
+//         // for (int i = 0; i < props.week.length; )
 //         <div className="CalendarWeek">
 
 //         </div>
 //     );
 // }
 
-// function CalendarDay() {
-//     return (
-//         <div className="CalendarDay">
-//             {days.map((day, i) =>
-//                 <Col className="DayName" xs="1" key={i}>
-//                     <p>{day}</p>
-//                 </Col>
-//             )}
-//         </div>
-//     );
-// }
+function CalendarDay(props) {
+    if (props.day){
+        return (
+            <Col className="CalendarDay" xs="1">
+                <p>{props.day.getDate()}</p>
+            </Col>
+        );
+    }
+    else{
+        return (
+            <Col className="CalendarDay" xs="1"/>
+        ); 
+    }
+
+}
 
 
 export default Calendar;
