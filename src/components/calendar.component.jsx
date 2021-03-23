@@ -1,32 +1,82 @@
 import React, { Component } from "react";
 import { Form, Container, Row, Col, Button } from "react-bootstrap";
 import "../styles/calendar.style.css";
+import { months, days } from "../data/constants.jsx"
+import holidaysData from '../data/holidays.json';
 
-const months = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
-]
-
-const days = [
-    'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
-]
 
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        this.getDates = this.getDates.bind(this);
+        // this.getDates = this.getDates.bind(this);
         this.state = {
-            daySelected: null
+            daySelected: "",
+            daysInMonth: []
         };
+    }
+
+
+    componentDidMount() {
+
+    }
+
+    handleDateChange = (date) => {
+        if (date) {
+            this.setState({
+                daySelected: date,
+                daysInMonth: this.getAllDaysInMonth(date)
+            }, () => {
+                // console.log(this.state.daysInMonth);
+            });
+        }
+    }
+
+
+    getHolidaysInMonth = (selectedDate) => {
+        if (selectedDate) {
+            const date = new Date(selectedDate);
+            var holidaysInMonth = new Array();
+
+            for (var i = 0; i < holidaysData.length; i++) {
+                var holidayDate = new Date(holidaysData[i].date);
+                var holidayIsRepeating = holidaysData[i].repeating;
+                if (holidayDate.getFullYear() == date.getFullYear() && holidayDate.getMonth() == date.getMonth()) {
+                    holidaysInMonth.push(holidayDate);
+                }
+                else if (holidayIsRepeating && holidayDate.getMonth() == date.getMonth()) {
+                    holidaysInMonth.push(holidayDate);
+                }
+            }
+
+            return holidaysInMonth;
+        }
+    }
+
+
+    getAllDaysInMonth = (selectedDate) => {
+        if (selectedDate) {
+            const date = new Date(selectedDate);
+            const year = date.getFullYear();
+            const month = date.getMonth();
+
+            const numberOfDays = new Date(year, month + 1, 0).getDate();
+
+            var daysInMonth = new Array();
+            for (var i = 0; i < numberOfDays; i++) {
+                daysInMonth.push(new Date(year, month, i + 1));
+            }
+
+            return daysInMonth;
+        }
+    }
+
+
+    getFirstDayIx = () => {
 
     }
 
 
-    getDates(selectedDate){
-        const date = new Date(selectedDate);
-        const firstDay = date.getDay();
-        console.log(firstDay);
-    }
+
 
     render() {
         return (
@@ -36,7 +86,7 @@ class Calendar extends Component {
                         <Form.Group as={Col} xs={{ span: 3, offset: 3 }}>
                             <Form.Control type="date" placeholder="DD/MM/YYYY" />
                         </Form.Group>
-                        <Form.Group as={Col} xs={{ span: 2}}>
+                        <Form.Group as={Col} xs={{ span: 2 }}>
                             <Button variant="outline-dark" block>Today</Button>
                         </Form.Group>
                     </Form.Row>
@@ -58,14 +108,20 @@ class Calendar extends Component {
                     </Form.Row>
                 </Form>
                 <Row className="Calendar-days">
-                    <Col xs="2"/>
+                    <Col xs="2" />
                     {days.map((day, i) =>
                         <Col xs="1" key={i}>
                             <p>{day}</p>
                         </Col>
                     )}
                 </Row>
-                {this.getDates("2021-4-1")}
+                <Row className="Calendar-dates">
+                    {days.map((day, i) =>
+                        <Col xs="1" key={i}>
+                            <p>{day}</p>
+                        </Col>
+                    )}
+                </Row>
             </Container>
         );
     }
