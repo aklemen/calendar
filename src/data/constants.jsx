@@ -6,3 +6,5 @@ export const months = [
 export const days = [
     'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
 ];
+
+export const yearsRange = [1900, 2050];

@@ -1,23 +1,64 @@
 body{
     font-family: 'Poppins', sans-serif !important;
+    text-align: center !important;
 }
 
+h1 {
+    font-weight: 700 !important;
+    font-size: 4rem !important;
+    color: #5C8DFE;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+
+.form-control:focus {
+    border-color: #5C8DFE !important;
+    box-shadow: inset 0 0px 2px #5C8DFE, 0 0 6px #5C8DFE !important;
+}
+
+
 .Calendar {
-    margin: 4rem 0;
+    margin: 5rem 0;
+}
+
+.Calendar-title {
+    margin-bottom: 3rem;
+}
+
+.Calendar-alert {
+    margin-top: 1rem;
+    background-color: #e1e0fa !important;
+    color: #7868e6 !important;
+    border-color: #d3d1fa !important;
+    font-weight: 500;
 }
 
 .Calendar-dayNames {
     font-weight: 500;
     margin-top: 2rem;
-    text-align: center;
 }
 
 
 .Calendar-days {
     margin-top: 1rem;
-    text-align: center;
 }
 
 .Calendar-days:hover {
     background-color: antiquewhite;
+}
+
+
+.Button-today {
+    border-color: #5C8DFE !important;
+    padding: 12px !important;
+    color: #5C8DFE !important;
+}
+
+.Button-today:hover {
+    border-color: #fff !important;
+    background-color: #5C8DFE !important;
+    color: #fff !important;
 }
