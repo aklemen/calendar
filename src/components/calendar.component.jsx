@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import "../styles/calendar.style.css";
 import { days, months, yearsRange } from "../data/constants.jsx"
-// import holidaysData from '../data/holidays.json';
+import holidaysData from '../data/holidays.json';
+import CalendarDay from '../components/calendar-day.component'
 
 
 class Calendar extends Component {
@@ -18,30 +19,30 @@ class Calendar extends Component {
             selectedMonth: todayDate.getMonth(),
             selectedYear: todayDate.getFullYear(),
             daysInMonth: [],
-            holidaysInMonth: [],
+            holidaysInMonth: this.getHolidaysInMonth(todayDate),
             warning: ""
         };
     }
 
-    // getHolidaysInMonth = (selectedDate) => {
-    //     if (selectedDate) {
-    //         const date = new Date(selectedDate);
-    //         var holidaysInMonth = new Array();
+    getHolidaysInMonth = (selectedDate) => {
+        if (selectedDate) {
+            const date = new Date(selectedDate);
+            var holidaysInMonth = new Array();
 
-    //         for (var i = 0; i < holidaysData.length; i++) {
-    //             var holidayDate = new Date(holidaysData[i].date);
-    //             var holidayIsRepeating = holidaysData[i].repeating;
-    //             if (holidayDate.getFullYear() == date.getFullYear() && holidayDate.getMonth() == date.getMonth()) {
-    //                 holidaysInMonth.push(holidayDate);
-    //             }
-    //             else if (holidayIsRepeating && holidayDate.getMonth() == date.getMonth()) {
-    //                 holidaysInMonth.push(holidayDate);
-    //             }
-    //         }
+            for (var i = 0; i < holidaysData.length; i++) {
+                var holidayDate = new Date(holidaysData[i].date);
+                var holidayIsRepeating = holidaysData[i].repeating;
+                if (holidayDate.getFullYear() == date.getFullYear() && holidayDate.getMonth() == date.getMonth()) {
+                    holidaysInMonth.push(holidayDate);
+                }
+                else if (holidayIsRepeating && holidayDate.getMonth() == date.getMonth()) {
+                    holidaysInMonth.push(holidayDate);
+                }
+            }
 
-    //         return holidaysInMonth;
-    //     }
-    // }
+            return holidaysInMonth;
+        }
+    }
 
 
     // getAllDaysInMonth = (selectedDate) => {
@@ -71,7 +72,6 @@ class Calendar extends Component {
 
 
     changeDate = (newDate) => {
-        console.log(newDate);
         if (newDate && newDate instanceof Date) {
             if (this.state.selectedDate.setHours(0, 0, 0, 0) != newDate.setHours(0, 0, 0, 0)) {
                 this.setState({
@@ -79,6 +79,7 @@ class Calendar extends Component {
                     selectedDay: newDate.getDate(),
                     selectedMonth: newDate.getMonth(),
                     selectedYear: newDate.getFullYear(),
+                    holidaysInMonth: this.getHolidaysInMonth(newDate),
                     warning: ""
                 });
             }
@@ -195,7 +196,6 @@ class Calendar extends Component {
         // }
 
 
-
         return (
             <Container className="Calendar">
                 <Row>
@@ -271,10 +271,13 @@ class Calendar extends Component {
                         </Col>
                     )}
                 </Row>
-                {/* <Row className="Calendar-days">
+                <Row className="Calendar-days">
                     <Col xs="2" />
-                    <CalendarDay day={new Date()} />
-                </Row> */}
+                    <CalendarDay
+                        date={this.state.selectedDate}
+                        holidays={this.state.holidaysInMonth}
+                    />
+                </Row>
             </Container>
         );
     }
@@ -292,22 +295,5 @@ class Calendar extends Component {
 //         </div>
 //     );
 // }
-
-// function CalendarDay(props) {
-//     if (props.day) {
-//         return (
-//             <Col className="CalendarDay" xs="1">
-//                 <p>{props.day.getDate()}</p>
-//             </Col>
-//         );
-//     }
-//     else {
-//         return (
-//             <Col className="CalendarDay" xs="1" />
-//         );
-//     }
-
-// }
-
 
 export default Calendar;

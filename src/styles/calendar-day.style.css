@@ -1,0 +1,8 @@
+.CalendarDay-sunday {
+    color: #5C8DFE;
+}
+
+.CalendarDay-holiday {
+    color: #8262FF;
+    font-weight: 700;
+}
