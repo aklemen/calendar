@@ -18,7 +18,8 @@ class Calendar extends Component {
 
         // Intializing state with today's date
 
-        const todayDate = new Date();
+        // const todayDate = new Date();
+        const todayDate = new Date(2302,15,1);
 
         this.state = {
             selectedDate: todayDate,
@@ -201,7 +202,7 @@ class Calendar extends Component {
                 </Row>
                 <Form>
                     <Row className="justify-content-md-center">
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="7">
                             <Button
                                 onClick={this.handleTodayClick}
                                 variant="outline-dark"
@@ -211,10 +212,10 @@ class Calendar extends Component {
                         </Form.Group>
                     </Row>
                     <Row className="justify-content-md-center">
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="2">
                             <Button variant="light" block>{"<"}</Button>
                         </Form.Group>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="2">
                             <Form.Control
                                 type="number"
                                 placeholder="dd"
@@ -224,7 +225,7 @@ class Calendar extends Component {
                                 onChange={this.handleDayChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="3">
                             <Form.Control
                                 as="select"
                                 value={this.state.selectedMonth}
@@ -235,7 +236,7 @@ class Calendar extends Component {
                                 }
                             </Form.Control>
                         </Form.Group>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="2">
                             <Form.Control
                                 type="number"
                                 placeholder="yyyy"
@@ -245,7 +246,7 @@ class Calendar extends Component {
                                 onChange={this.handleYearChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col}>
+                        <Form.Group as={Col} xs="2">
                             <Button variant="light" block>{">"}</Button>
                         </Form.Group>
                     </Row>
