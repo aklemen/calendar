@@ -1,4 +1,4 @@
-# Calendar
+## Calendar
 
 A simple calendar app, made in React.
 
