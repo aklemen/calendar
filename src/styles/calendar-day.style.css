@@ -6,6 +6,7 @@
 
 .CalendarDay:hover {
     background-color: #e5ebfc;
+    cursor: pointer;
 }
 
 .CalendarDay.active {
