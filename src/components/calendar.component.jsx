@@ -3,13 +3,12 @@ import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
 import "../styles/calendar.style.css";
 import { days, months, yearsRange } from "../data/constants.jsx"
 import holidaysData from '../data/holidays.json';
-import CalendarDay from '../components/calendar-day.component'
+import CalendarWeek from '../components/calendar-week.component'
 
 
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        // this.getDates = this.getDates.bind(this);
 
         const todayDate = new Date();
 
@@ -18,10 +17,32 @@ class Calendar extends Component {
             selectedDay: todayDate.getDate(),
             selectedMonth: todayDate.getMonth(),
             selectedYear: todayDate.getFullYear(),
-            daysInMonth: [],
+            weeksInMonth: this.getWeeksInMonth(todayDate),
             holidaysInMonth: this.getHolidaysInMonth(todayDate),
             warning: ""
         };
+    }
+
+    getWeeksInMonth = (selectedDate) => {
+        const numberOfDaysInMonth = this.getNumberOfDaysInMonth(selectedDate);
+        const year = selectedDate.getFullYear();
+        const month = selectedDate.getMonth();
+
+        var weeksInMonth = new Array();
+        var currentWeek = new Array(7).fill(null);
+        var currentDate;
+        var currentDayIx;
+        for (var i = 1; i <= numberOfDaysInMonth; i++) {
+            currentDate = new Date(year, month, i);
+            currentDayIx = (currentDate.getDay() == 0) ? 6 : (currentDate.getDay() - 1);
+            currentWeek[currentDayIx] = currentDate;
+            if (currentDayIx == 6 && i != numberOfDaysInMonth) {
+                weeksInMonth.push(currentWeek);
+                currentWeek = new Array(7).fill(null);
+            }
+        }
+        weeksInMonth.push(currentWeek);
+        return weeksInMonth;
     }
 
     getHolidaysInMonth = (selectedDate) => {
@@ -43,54 +64,6 @@ class Calendar extends Component {
             return holidaysInMonth;
         }
     }
-
-
-    // getAllDaysInMonth = (selectedDate) => {
-    //     if (selectedDate) {
-    //         const date = new Date(selectedDate);
-    //         const year = date.getFullYear();
-    //         const month = date.getMonth();
-
-    //         const numberOfDays = new Date(year, month + 1, 0).getDate();
-
-    //         var daysInMonth = new Array();
-    //         for (var i = 0; i < numberOfDays; i++) {
-    //             daysInMonth.push(new Date(year, month, i + 1));
-    //         }
-
-    //         return daysInMonth;
-    //     }
-    // }
-
-        // if (!(this.state.daysInMonth === undefined || this.state.daysInMonth.length == 0)) {
-        //     var allWeeks = [];
-        //     var currentDayIx = 0;
-        //     var currentWeek = [];
-        //     const nrOfDaysInMonth = this.state.daysInMonth.length;
-        //     for (var i = 0; i < nrOfDaysInMonth; i++) {
-        //         currentDayIx = this.state.daysInMonth[i].getDay();
-        //         currentDayIx = (currentDayIx == 0) ? 6 : currentDayIx - 1;
-        //         currentWeek.push(this.state.daysInMonth[i]);
-        //         if (currentDayIx == 6 || (this.state.daysInMonth.length == i + 1)) {
-        //             allWeeks.push(currentWeek);
-        //             currentWeek = [];
-        //         }
-        //     }
-
-        //     const firstDayIx = (this.state.daysInMonth[0].getDay() == 0) ? 6 : this.state.daysInMonth[0].getDay() - 1;
-        //     const lastDayIx = (this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() == 0) ? 6 : this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() - 1;
-
-        //     var emptyDates;
-        //     if (firstDayIx != 0) {
-        //         emptyDates = Array(firstDayIx).fill(null)
-        //         allWeeks[0].unshift(...emptyDates);
-        //     }
-
-        //     if (lastDayIx != 6) {
-        //         emptyDates = Array(6 - lastDayIx).fill(null)
-        //         allWeeks[allWeeks.length - 1].push(...emptyDates);
-        //     }
-        // }
 
 
     getNumberOfDaysInMonth = (date) => {
@@ -272,27 +245,19 @@ class Calendar extends Component {
                 </Row>
                 <Row className="Calendar-days">
                     <Col xs="2" />
-                    <CalendarDay
-                        date={this.state.selectedDate}
-                        holidays={this.state.holidaysInMonth}
-                    />
+                    <Col xs="7">
+                    {this.state.weeksInMonth.map((week, i) =>
+                        <CalendarWeek
+                            key={i}
+                            week={week}
+                            holidays={this.state.holidaysInMonth}
+                        />
+                    )}
+                    </Col>
                 </Row>
             </Container>
         );
     }
 }
-
-// function CalendarWeek(props) {
-
-//     var week = []
-
-//     return (
-//         // var startIx = props.days[0].getDay();
-//         // for (int i = 0; i < props.week.length; )
-//         <div className="CalendarWeek">
-
-//         </div>
-//     );
-// }
 
 export default Calendar;

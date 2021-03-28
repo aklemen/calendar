@@ -8,7 +8,6 @@ class CalendarWeek extends Component {
         super(props);
     }
     render() {
-
         return (
             <Row>
                 {this.props.week.map((date, i) =>

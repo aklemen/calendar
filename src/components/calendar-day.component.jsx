@@ -41,25 +41,27 @@ class CalendarDay extends Component {
                     <Col className="CalendarDay CalendarDay-holiday" xs="1">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
-                )
+                );
             }
             else if (this.isSunday(this.props.date)) {
                 return (
                     <Col className="CalendarDay CalendarDay-sunday" xs="1">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
-                )
+                );
             }
             else {
                 return (
                     <Col className="CalendarDay" xs="1">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
-                )
+                );
             }
         }
         else {
-            <Col className="CalendarDay" xs="1" />
+            return (
+                <Col className="CalendarDay" xs="1" />
+            );
         }
 
     }
@@ -67,7 +69,9 @@ class CalendarDay extends Component {
 
 CalendarDay.propTypes = {
     date: PropTypes.instanceOf(Date),
-    holidays: PropTypes.array
+    holidays: PropTypes.arrayOf(
+        PropTypes.instanceOf(Date)
+    )
 };
 
 export default CalendarDay;
