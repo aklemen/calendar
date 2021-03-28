@@ -62,6 +62,36 @@ class Calendar extends Component {
     //     }
     // }
 
+        // if (!(this.state.daysInMonth === undefined || this.state.daysInMonth.length == 0)) {
+        //     var allWeeks = [];
+        //     var currentDayIx = 0;
+        //     var currentWeek = [];
+        //     const nrOfDaysInMonth = this.state.daysInMonth.length;
+        //     for (var i = 0; i < nrOfDaysInMonth; i++) {
+        //         currentDayIx = this.state.daysInMonth[i].getDay();
+        //         currentDayIx = (currentDayIx == 0) ? 6 : currentDayIx - 1;
+        //         currentWeek.push(this.state.daysInMonth[i]);
+        //         if (currentDayIx == 6 || (this.state.daysInMonth.length == i + 1)) {
+        //             allWeeks.push(currentWeek);
+        //             currentWeek = [];
+        //         }
+        //     }
+
+        //     const firstDayIx = (this.state.daysInMonth[0].getDay() == 0) ? 6 : this.state.daysInMonth[0].getDay() - 1;
+        //     const lastDayIx = (this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() == 0) ? 6 : this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() - 1;
+
+        //     var emptyDates;
+        //     if (firstDayIx != 0) {
+        //         emptyDates = Array(firstDayIx).fill(null)
+        //         allWeeks[0].unshift(...emptyDates);
+        //     }
+
+        //     if (lastDayIx != 6) {
+        //         emptyDates = Array(6 - lastDayIx).fill(null)
+        //         allWeeks[allWeeks.length - 1].push(...emptyDates);
+        //     }
+        // }
+
 
     getNumberOfDaysInMonth = (date) => {
         if (date && date instanceof Date) {
@@ -165,37 +195,6 @@ class Calendar extends Component {
 
 
     render() {
-        // if (!(this.state.daysInMonth === undefined || this.state.daysInMonth.length == 0)) {
-        //     var allWeeks = [];
-        //     var currentDayIx = 0;
-        //     var currentWeek = [];
-        //     const nrOfDaysInMonth = this.state.daysInMonth.length;
-        //     for (var i = 0; i < nrOfDaysInMonth; i++) {
-        //         currentDayIx = this.state.daysInMonth[i].getDay();
-        //         currentDayIx = (currentDayIx == 0) ? 6 : currentDayIx - 1;
-        //         currentWeek.push(this.state.daysInMonth[i]);
-        //         if (currentDayIx == 6 || (this.state.daysInMonth.length == i + 1)) {
-        //             allWeeks.push(currentWeek);
-        //             currentWeek = [];
-        //         }
-        //     }
-
-        //     const firstDayIx = (this.state.daysInMonth[0].getDay() == 0) ? 6 : this.state.daysInMonth[0].getDay() - 1;
-        //     const lastDayIx = (this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() == 0) ? 6 : this.state.daysInMonth[nrOfDaysInMonth - 1].getDay() - 1;
-
-        //     var emptyDates;
-        //     if (firstDayIx != 0) {
-        //         emptyDates = Array(firstDayIx).fill(null)
-        //         allWeeks[0].unshift(...emptyDates);
-        //     }
-
-        //     if (lastDayIx != 6) {
-        //         emptyDates = Array(6 - lastDayIx).fill(null)
-        //         allWeeks[allWeeks.length - 1].push(...emptyDates);
-        //     }
-        // }
-
-
         return (
             <Container className="Calendar">
                 <Row>
