@@ -19,7 +19,7 @@ class Calendar extends Component {
         // Intializing state with today's date
 
         // const todayDate = new Date();
-        const todayDate = new Date(2302,15,1);
+        const todayDate = new Date(2302, 15, 1);
 
         this.state = {
             selectedDate: todayDate,
@@ -191,6 +191,23 @@ class Calendar extends Component {
         }
     }
 
+
+    // Handles skipping to previous month.
+    handleMonthPrevious = () => {
+        const oldDate = new Date(this.state.selectedDate);
+        const newDate = new Date(oldDate.setMonth(oldDate.getMonth() - 1))
+        this.changeDate(newDate);
+    }
+
+
+    // Handles skipping to next month.
+    handleMonthNext = () => {
+        const oldDate = new Date(this.state.selectedDate);
+        const newDate = new Date(oldDate.setMonth(oldDate.getMonth() + 1))
+        this.changeDate(newDate);
+    }
+
+
     // Rendering the user interface
     render() {
         return (
@@ -213,7 +230,13 @@ class Calendar extends Component {
                     </Row>
                     <Row className="justify-content-md-center">
                         <Form.Group as={Col} xs="2">
-                            <Button variant="light" block>{"<"}</Button>
+                        <Button
+                                variant="light"
+                                onClick={this.handleMonthPrevious}
+                                block
+                            >
+                                {"<"}
+                            </Button>
                         </Form.Group>
                         <Form.Group as={Col} xs="2">
                             <Form.Control
@@ -247,7 +270,13 @@ class Calendar extends Component {
                             />
                         </Form.Group>
                         <Form.Group as={Col} xs="2">
-                            <Button variant="light" block>{">"}</Button>
+                            <Button
+                                variant="light"
+                                onClick={this.handleMonthNext}
+                                block
+                            >
+                                {">"}
+                            </Button>
                         </Form.Group>
                     </Row>
                     {this.state.warning &&
