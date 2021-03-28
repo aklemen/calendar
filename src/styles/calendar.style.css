@@ -3,15 +3,6 @@ body{
     text-align: center !important;
 }
 
-h1 {
-    font-weight: 700 !important;
-    font-size: 4rem !important;
-    color: #5C8DFE;
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-    -webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-}
 
 
 .form-control:focus {
@@ -24,7 +15,14 @@ h1 {
     margin: 5rem 0;
 }
 
-.Calendar-title {
+.Calendar-title h1 {
+	-webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    color: #5C8DFE;
+    font-size: 4rem !important;
+    font-weight: 700 !important;
     margin-bottom: 3rem;
 }
 

@@ -38,21 +38,21 @@ class CalendarDay extends Component {
         if (this.props.date) {
             if (this.isHoliday(this.props.date, this.props.holidays)) {
                 return (
-                    <Col className="CalendarDay CalendarDay-holiday" xs="1">
+                    <Col className="CalendarDay CalendarDay-holiday">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
             else if (this.isSunday(this.props.date)) {
                 return (
-                    <Col className="CalendarDay CalendarDay-sunday" xs="1">
+                    <Col className="CalendarDay CalendarDay-sunday">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
             else {
                 return (
-                    <Col className="CalendarDay" xs="1">
+                    <Col className="CalendarDay">
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
@@ -60,7 +60,7 @@ class CalendarDay extends Component {
         }
         else {
             return (
-                <Col className="CalendarDay" xs="1" />
+                <Col className="CalendarDay" />
             );
         }
 

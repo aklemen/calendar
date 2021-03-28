@@ -9,7 +9,7 @@ class CalendarWeek extends Component {
     }
     render() {
         return (
-            <Row>
+            <Row className="justify-content-md-center">
                 {this.props.week.map((date, i) =>
                     <CalendarDay
                         key={i}

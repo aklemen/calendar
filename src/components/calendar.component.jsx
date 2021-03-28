@@ -60,7 +60,6 @@ class Calendar extends Component {
                     holidaysInMonth.push(holidayDate);
                 }
             }
-
             return holidaysInMonth;
         }
     }
@@ -82,6 +81,7 @@ class Calendar extends Component {
                     selectedDay: newDate.getDate(),
                     selectedMonth: newDate.getMonth(),
                     selectedYear: newDate.getFullYear(),
+                    weeksInMonth: this.getWeeksInMonth(newDate),
                     holidaysInMonth: this.getHolidaysInMonth(newDate),
                     warning: ""
                 });
@@ -171,13 +171,13 @@ class Calendar extends Component {
         return (
             <Container className="Calendar">
                 <Row>
-                    <Col className="Calendar-title" xs={{ span: 11 }}>
+                    <Col className="Calendar-title">
                         <h1>Calendar</h1>
                     </Col>
                 </Row>
                 <Form>
-                    <Form.Row>
-                        <Form.Group as={Col} xs={{ span: 5, offset: 3 }}>
+                    <Row className="justify-content-md-center">
+                        <Form.Group as={Col}>
                             <Button
                                 onClick={this.handleTodayClick}
                                 variant="outline-dark"
@@ -185,12 +185,12 @@ class Calendar extends Component {
                                 block
                             >Today</Button>
                         </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
-                        <Form.Group as={Col} xs={{ span: 1, offset: 1 }}>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Form.Group as={Col}>
                             <Button variant="light" block>{"<"}</Button>
                         </Form.Group>
-                        <Form.Group as={Col} xs={{ span: 1, offset: 1 }}>
+                        <Form.Group as={Col}>
                             <Form.Control
                                 type="number"
                                 placeholder="dd"
@@ -200,7 +200,7 @@ class Calendar extends Component {
                                 onChange={this.handleDayChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} xs={{ span: 3 }}>
+                        <Form.Group as={Col}>
                             <Form.Control
                                 as="select"
                                 value={this.state.selectedMonth}
@@ -209,7 +209,7 @@ class Calendar extends Component {
                                 {months.map((month, i) => <option value={i} key={i}>{month}</option>)}
                             </Form.Control>
                         </Form.Group>
-                        <Form.Group as={Col} xs={{ span: 1 }}>
+                        <Form.Group as={Col}>
                             <Form.Control
                                 type="number"
                                 placeholder="yyyy"
@@ -219,42 +219,40 @@ class Calendar extends Component {
                                 onChange={this.handleYearChange}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} xs={{ span: 1, offset: 1 }}>
+                        <Form.Group as={Col}>
                             <Button variant="light" block>{">"}</Button>
                         </Form.Group>
-                    </Form.Row>
+                    </Row>
                     {this.state.warning &&
-                        <Form.Row>
-                            <Col xs={{ span: 5, offset: 3 }}>
+                        <Row className="justify-content-md-center">
+                            <Col>
                                 <Alert
                                     className="Calendar-alert"
                                     variant="warning">
                                     {this.state.warning}
                                 </Alert>
                             </Col>
-                        </Form.Row>
+                        </Row>
                     }
                 </Form>
-                <Row className="Calendar-dayNames">
-                    <Col xs="2" />
+                <Row className="Calendar-dayNames justify-content-md-center">
                     {days.map((day, i) =>
-                        <Col xs="1" key={i}>
+                        <Col
+                            key={i}
+                        >
                             <p>{day}</p>
                         </Col>
                     )}
                 </Row>
-                <Row className="Calendar-days">
-                    <Col xs="2" />
-                    <Col xs="7">
-                    {this.state.weeksInMonth.map((week, i) =>
-                        <CalendarWeek
-                            key={i}
-                            week={week}
-                            holidays={this.state.holidaysInMonth}
-                        />
-                    )}
-                    </Col>
-                </Row>
+                <Container className="Calendar-days" fluid >
+                        {this.state.weeksInMonth.map((week, i) =>
+                            <CalendarWeek
+                                key={i}
+                                week={week}
+                                holidays={this.state.holidaysInMonth}
+                            />
+                        )}
+                </Container>
             </Container>
         );
     }
