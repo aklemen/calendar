@@ -26,12 +26,24 @@ body{
     margin-bottom: 3rem;
 }
 
-.Calendar-alert {
-    margin-top: 1rem;
-    background-color: #e5ebfc !important;
+.Calendar-button {
+    border-color: #5C8DFE !important;
     color: #5C8DFE !important;
+    padding: 12px !important;
+}
+
+.Calendar-button:hover {
+    background-color: #5C8DFE !important;
+    border-color: #fff !important;
+    color: #fff !important;
+}
+
+.Calendar-alert {
+    background-color: #e5ebfc !important;
     border-color: #dfe9fd !important;
+    color: #5C8DFE !important;
     font-weight: 500;
+    margin-top: 1rem;
 }
 
 .Calendar-dayNames {
@@ -39,19 +51,6 @@ body{
     margin-top: 2rem;
 }
 
-
 .Calendar-days {
     margin-top: 1rem;
-}
-
-.Button-today {
-    border-color: #5C8DFE !important;
-    padding: 12px !important;
-    color: #5C8DFE !important;
-}
-
-.Button-today:hover {
-    border-color: #fff !important;
-    background-color: #5C8DFE !important;
-    color: #fff !important;
 }

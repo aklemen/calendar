@@ -1,14 +1,22 @@
+// Components
 import React, { Component } from "react";
 import { Form, Container, Row, Col, Button, Alert } from "react-bootstrap";
-import "../styles/calendar.style.css";
-import { days, months, yearsRange } from "../data/constants.jsx"
-import holidaysData from '../data/holidays.json';
 import CalendarWeek from '../components/calendar-week.component'
 
+// Data
+import { days, months, yearsRange } from "../data/constants.jsx"
+import holidaysData from '../data/holidays.json';
 
+// Styles
+import "../styles/calendar.style.css";
+
+
+// Calendar parent component
 class Calendar extends Component {
     constructor(props) {
         super(props);
+
+        // Intializing state with today's date
 
         const todayDate = new Date();
 
@@ -23,28 +31,37 @@ class Calendar extends Component {
         };
     }
 
-    getWeeksInMonth = (selectedDate) => {
-        const numberOfDaysInMonth = this.getNumberOfDaysInMonth(selectedDate);
-        const year = selectedDate.getFullYear();
-        const month = selectedDate.getMonth();
 
-        var weeksInMonth = new Array();
-        var currentWeek = new Array(7).fill(null);
-        var currentDate;
-        var currentDayIx;
-        for (var i = 1; i <= numberOfDaysInMonth; i++) {
-            currentDate = new Date(year, month, i);
-            currentDayIx = (currentDate.getDay() == 0) ? 6 : (currentDate.getDay() - 1);
-            currentWeek[currentDayIx] = currentDate;
-            if (currentDayIx == 6 && i != numberOfDaysInMonth) {
-                weeksInMonth.push(currentWeek);
-                currentWeek = new Array(7).fill(null);
+    // Returns an array of weeks in selected date's month.
+    // Each week is an array of corresponding dates.
+    // The position of each date in the week's array corresponds to the day in a week ([0] = Mon, [1] = Tue, etc.).
+    getWeeksInMonth = (selectedDate) => {
+        if (selectedDate) {
+            const numberOfDaysInMonth = this.getNumberOfDaysInMonth(selectedDate);
+            const year = selectedDate.getFullYear();
+            const month = selectedDate.getMonth();
+
+            var weeksInMonth = new Array();
+            var currentWeek = new Array(7).fill(null);
+            var currentDate;
+            var currentDayIx;
+            for (var i = 1; i <= numberOfDaysInMonth; i++) {
+                currentDate = new Date(year, month, i);
+                currentDayIx = (currentDate.getDay() == 0) ? 6 : (currentDate.getDay() - 1);
+                currentWeek[currentDayIx] = currentDate;
+                if (currentDayIx == 6 && i != numberOfDaysInMonth) {
+                    weeksInMonth.push(currentWeek);
+                    currentWeek = new Array(7).fill(null);
+                }
             }
+            weeksInMonth.push(currentWeek);
+            return weeksInMonth;
         }
-        weeksInMonth.push(currentWeek);
-        return weeksInMonth;
+        return null;
     }
 
+
+    // Returns an array of holidays' dates, that take place in selected date's month.
     getHolidaysInMonth = (selectedDate) => {
         if (selectedDate) {
             const date = new Date(selectedDate);
@@ -62,17 +79,20 @@ class Calendar extends Component {
             }
             return holidaysInMonth;
         }
+        return null;
     }
 
 
-    getNumberOfDaysInMonth = (date) => {
-        if (date && date instanceof Date) {
-            const numberOfDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    // Returns the number of days in selected date's month.
+    getNumberOfDaysInMonth = (selectedDate) => {
+        if (selectedDate && selectedDate instanceof Date) {
+            const numberOfDays = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate();
             return numberOfDays;
         }
     }
 
 
+    // Changes the currently selected date on the calendar = updates all the necessary states.
     changeDate = (newDate) => {
         if (newDate && newDate instanceof Date) {
             if (this.state.selectedDate.setHours(0, 0, 0, 0) != newDate.setHours(0, 0, 0, 0)) {
@@ -100,11 +120,13 @@ class Calendar extends Component {
     }
 
 
+    // Handles the click event on 'Today' button = updates selected date to the today's date.
     handleTodayClick = () => {
         this.changeDate(new Date());
     }
 
 
+    // Handles the change of day in selected date.
     handleDayChange = (e) => {
         const day = e.target.value;
         this.setState({
@@ -124,6 +146,7 @@ class Calendar extends Component {
     }
 
 
+    // Handles the change of month in selected date.
     handleMonthChange = (e) => {
         const month = e.target.value;
         this.setState({
@@ -149,6 +172,7 @@ class Calendar extends Component {
     }
 
 
+    // Handles the change of year in selected date.
     handleYearChange = (e) => {
         const year = e.target.value;
         this.setState({
@@ -166,7 +190,7 @@ class Calendar extends Component {
         }
     }
 
-
+    // Rendering the user interface
     render() {
         return (
             <Container className="Calendar">
@@ -181,7 +205,7 @@ class Calendar extends Component {
                             <Button
                                 onClick={this.handleTodayClick}
                                 variant="outline-dark"
-                                className="Button-today"
+                                className="Calendar-button"
                                 block
                             >Today</Button>
                         </Form.Group>
@@ -206,7 +230,9 @@ class Calendar extends Component {
                                 value={this.state.selectedMonth}
                                 onChange={this.handleMonthChange}
                             >
-                                {months.map((month, i) => <option value={i} key={i}>{month}</option>)}
+                                {months.map((month, i) =>
+                                    <option value={i} key={i}>{month}</option>)
+                                }
                             </Form.Control>
                         </Form.Group>
                         <Form.Group as={Col}>
@@ -244,18 +270,19 @@ class Calendar extends Component {
                         </Col>
                     )}
                 </Row>
-                <Container className="Calendar-days" fluid >
-                        {this.state.weeksInMonth.map((week, i) =>
-                            <CalendarWeek
-                                key={i}
-                                week={week}
-                                holidays={this.state.holidaysInMonth}
-                            />
-                        )}
+                <Container className="Calendar-days" fluid>
+                    {this.state.weeksInMonth.map((week, i) =>
+                        <CalendarWeek
+                            key={i}
+                            week={week}
+                            holidays={this.state.holidaysInMonth}
+                        />
+                    )}
                 </Container>
             </Container>
         );
     }
 }
+
 
 export default Calendar;

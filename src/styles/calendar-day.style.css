@@ -1,8 +1,8 @@
 .CalendarDay p {
-    margin: 0px auto;
-    display:inline-block;
-    padding: 16px 24px;
     border-radius: 16px;
+    display:inline-block;
+    margin: 0px auto;
+    padding: 16px 24px;
 }
 
 .CalendarDay p:hover {

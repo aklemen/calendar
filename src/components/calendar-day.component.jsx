@@ -1,14 +1,22 @@
+// Components
 import React, { Component } from "react";
-import "../styles/calendar-day.style.css";
 import { Col } from "react-bootstrap";
+
+// Styles
+import "../styles/calendar-day.style.css";
+
+// Other
 import PropTypes from 'prop-types';
 
+
+// CalendarDay component that renders each date and styles it accordingly (sundays, holidays...)
 class CalendarDay extends Component {
     constructor(props) {
         super(props);
     }
 
 
+    // Returns true, if the date's day is sunday
     isSunday = (date) => {
         if (date && date instanceof Date) {
             if (date.getDay() === 0) {
@@ -19,6 +27,7 @@ class CalendarDay extends Component {
     }
 
 
+    // Returns true, if the date is a holiday
     isHoliday = (date, holidays) => {
         if (date && date instanceof Date) {
             for (var i = 0; i < holidays.length; i++) {
@@ -33,8 +42,6 @@ class CalendarDay extends Component {
 
 
     render() {
-
-
         if (this.props.date) {
             if (this.isHoliday(this.props.date, this.props.holidays)) {
                 return (
@@ -60,18 +67,20 @@ class CalendarDay extends Component {
         }
         else {
             return (
-                <Col className="CalendarDay" />
+                <Col/>
             );
         }
-
     }
 }
 
+
+// Checking the props' types
 CalendarDay.propTypes = {
     date: PropTypes.instanceOf(Date),
     holidays: PropTypes.arrayOf(
         PropTypes.instanceOf(Date)
     )
 };
+
 
 export default CalendarDay;
