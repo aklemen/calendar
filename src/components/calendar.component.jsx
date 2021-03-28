@@ -15,6 +15,7 @@ import "../styles/calendar.style.css";
 class Calendar extends Component {
     constructor(props) {
         super(props);
+        this.changeDate = this.changeDate.bind(this);
 
         // Intializing state with today's date
 
@@ -307,6 +308,7 @@ class Calendar extends Component {
                             week={week}
                             holidays={this.state.holidaysInMonth}
                             selectedDate={this.state.selectedDate}
+                            onChangeDate={this.changeDate}
                         />
                     )}
                 </Container>

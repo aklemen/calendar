@@ -13,6 +13,13 @@ class CalendarWeek extends Component {
         super(props);
     }
 
+
+    // Invokes parent component's function to change the selected date.
+    handleDateChange = (selectedDate) => {
+        this.props.onChangeDate(selectedDate);
+    }
+
+
     render() {
         return (
             <Row className="justify-content-md-center">
@@ -22,6 +29,7 @@ class CalendarWeek extends Component {
                         date={date}
                         holidays={this.props.holidays}
                         selectedDate={this.props.selectedDate}
+                        onChangeDate={this.handleDateChange}
                     />
                 )}
             </Row>
@@ -38,7 +46,8 @@ CalendarWeek.propTypes = {
     holidays: PropTypes.arrayOf(
         PropTypes.instanceOf(Date)
     ),
-    selectedDate: PropTypes.instanceOf(Date)
+    selectedDate: PropTypes.instanceOf(Date),
+    onChangeDate: PropTypes.func
 }
 
 

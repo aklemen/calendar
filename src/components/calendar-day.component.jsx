@@ -57,21 +57,30 @@ class CalendarDay extends Component {
         if (this.props.date) {
             if (this.isHoliday()) {
                 return (
-                    <Col className={`CalendarDay CalendarDay-holiday ${(this.isSelected() ? 'active' : '')}`}>
+                    <Col
+                        onClick={() => this.props.onChangeDate(this.props.date)}
+                        className={`CalendarDay CalendarDay-holiday ${(this.isSelected() ? 'active' : '')}`}
+                    >
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
             else if (this.isSunday()) {
                 return (
-                    <Col className={`CalendarDay CalendarDay-sunday ${(this.isSelected() ? 'active' : '')}`}>
+                    <Col
+                        onClick={() => this.props.onChangeDate(this.props.date)}
+                        className={`CalendarDay CalendarDay-sunday ${(this.isSelected() ? 'active' : '')}`}
+                    >
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
             else {
                 return (
-                    <Col className={`CalendarDay ${(this.isSelected() ? 'active' : '')}`}>
+                    <Col
+                        className={`CalendarDay ${(this.isSelected() ? 'active' : '')}`}
+                        onClick={() => this.props.onChangeDate(this.props.date)}
+                    >
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
@@ -79,7 +88,7 @@ class CalendarDay extends Component {
         }
         else {
             return (
-                <Col className="CalendarDay CalendarDay-empty"/>
+                <Col className="CalendarDay CalendarDay-empty" />
             );
         }
     }
@@ -92,7 +101,8 @@ CalendarDay.propTypes = {
     selectedDate: PropTypes.instanceOf(Date),
     holidays: PropTypes.arrayOf(
         PropTypes.instanceOf(Date)
-    )
+    ),
+    onChangeDate: PropTypes.func
 };
 
 
