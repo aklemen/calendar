@@ -18,8 +18,7 @@ class Calendar extends Component {
 
         // Intializing state with today's date
 
-        // const todayDate = new Date();
-        const todayDate = new Date(2302, 15, 1);
+        const todayDate = new Date();
 
         this.state = {
             selectedDate: todayDate,
@@ -291,21 +290,23 @@ class Calendar extends Component {
                         </Row>
                     }
                 </Form>
-                <Row className="Calendar-dayNames justify-content-md-center">
-                    {days.map((day, i) =>
-                        <Col
-                            key={i}
-                        >
-                            <p>{day}</p>
-                        </Col>
-                    )}
-                </Row>
                 <Container className="Calendar-days" fluid>
+                    <Row className="justify-content-md-center">
+                        {days.map((day, i) =>
+                            <Col
+                                key={i}
+                                className="Calendar-dayName"
+                            >
+                                <p>{day}</p>
+                            </Col>
+                        )}
+                    </Row>
                     {this.state.weeksInMonth.map((week, i) =>
                         <CalendarWeek
                             key={i}
                             week={week}
                             holidays={this.state.holidaysInMonth}
+                            selectedDate={this.state.selectedDate}
                         />
                     )}
                 </Container>

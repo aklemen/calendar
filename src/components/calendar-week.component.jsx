@@ -21,6 +21,7 @@ class CalendarWeek extends Component {
                         key={i}
                         date={date}
                         holidays={this.props.holidays}
+                        selectedDate={this.props.selectedDate}
                     />
                 )}
             </Row>
@@ -36,7 +37,8 @@ CalendarWeek.propTypes = {
     ),
     holidays: PropTypes.arrayOf(
         PropTypes.instanceOf(Date)
-    )
+    ),
+    selectedDate: PropTypes.instanceOf(Date)
 }
 
 

@@ -17,9 +17,9 @@ class CalendarDay extends Component {
 
 
     // Returns true, if the date's day is sunday
-    isSunday = (date) => {
-        if (date && date instanceof Date) {
-            if (date.getDay() === 0) {
+    isSunday = () => {
+        if (this.props.date && this.props.date instanceof Date) {
+            if (this.props.date.getDay() === 0) {
                 return true;
             }
         }
@@ -28,11 +28,11 @@ class CalendarDay extends Component {
 
 
     // Returns true, if the date is a holiday
-    isHoliday = (date, holidays) => {
-        if (date && date instanceof Date) {
-            for (var i = 0; i < holidays.length; i++) {
-                if (holidays[i].getDate() == date.getDate() &&
-                    holidays[i].getMonth() == date.getMonth()) {
+    isHoliday = () => {
+        if (this.props.date && this.props.date instanceof Date && this.props.holidays) {
+            for (var i = 0; i < this.props.holidays.length; i++) {
+                if (this.props.holidays[i].getDate() == this.props.date.getDate() &&
+                    this.props.holidays[i].getMonth() == this.props.date.getMonth()) {
                     return true;
                 }
             }
@@ -41,25 +41,37 @@ class CalendarDay extends Component {
     }
 
 
+    isSelected = () => {
+        if (this.props.date && this.props.date instanceof Date &&
+            this.props.selectedDate && this.props.selectedDate instanceof Date
+        ) {
+            if (this.props.selectedDate.setHours(0, 0, 0, 0) == this.props.date.setHours(0, 0, 0, 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     render() {
         if (this.props.date) {
-            if (this.isHoliday(this.props.date, this.props.holidays)) {
+            if (this.isHoliday()) {
                 return (
-                    <Col className="CalendarDay CalendarDay-holiday">
+                    <Col className={`CalendarDay CalendarDay-holiday ${(this.isSelected() ? 'active' : '')}`}>
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
-            else if (this.isSunday(this.props.date)) {
+            else if (this.isSunday()) {
                 return (
-                    <Col className="CalendarDay CalendarDay-sunday">
+                    <Col className={`CalendarDay CalendarDay-sunday ${(this.isSelected() ? 'active' : '')}`}>
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
             }
             else {
                 return (
-                    <Col className="CalendarDay">
+                    <Col className={`CalendarDay ${(this.isSelected() ? 'active' : '')}`}>
                         <p>{this.props.date.getDate()}</p>
                     </Col>
                 );
@@ -67,7 +79,7 @@ class CalendarDay extends Component {
         }
         else {
             return (
-                <Col/>
+                <Col className="CalendarDay CalendarDay-empty"/>
             );
         }
     }
@@ -77,6 +89,7 @@ class CalendarDay extends Component {
 // Checking the props' types
 CalendarDay.propTypes = {
     date: PropTypes.instanceOf(Date),
+    selectedDate: PropTypes.instanceOf(Date),
     holidays: PropTypes.arrayOf(
         PropTypes.instanceOf(Date)
     )

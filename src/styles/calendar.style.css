@@ -39,9 +39,10 @@
     margin-top: 1rem;
 }
 
-.Calendar-dayNames {
+.Calendar-dayName {
     font-weight: 500;
-    margin-top: 2rem;
+    margin: 2rem 0.5rem 0.5rem !important;
+    padding: 1rem 0 !important;
 }
 
 .Calendar-days {

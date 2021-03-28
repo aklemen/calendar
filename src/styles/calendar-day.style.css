@@ -1,11 +1,14 @@
-.CalendarDay p {
+.CalendarDay {
     border-radius: 16px;
-    display:inline-block;
-    margin: 0px auto;
-    padding: 16px 24px;
+    margin: 0.5rem !important;
+    padding: 1rem 0 !important;
 }
 
-.CalendarDay p:hover {
+.CalendarDay:hover {
+    background-color: #e5ebfc;
+}
+
+.CalendarDay.active {
     background-color: #e5ebfc;
 }
 
@@ -16,4 +19,8 @@
 .CalendarDay-holiday {
     color: #8262FF;
     font-weight: 700;
+}
+
+.CalendarDay-empty:hover {
+    background-color: #fff;
 }
