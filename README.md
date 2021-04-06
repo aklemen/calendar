@@ -1,5 +1,3 @@
-## Calendar
+## React Calendar
 
-A simple calendar app, made in React.
-
-Available on [Heroku](https://ixtlan-calendar.herokuapp.com/).
+A simple [calendar app](https://aklemen-calendar.herokuapp.com/), made in React.
